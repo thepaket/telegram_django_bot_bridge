@@ -198,7 +198,7 @@ class TelegaViewSet(metaclass=TelegaViewSetMetaClass):
     # def get_item(self, item):
     #     """ show info about item"""
 
-    def create_or_update_helper(self, field, value, func_response='create', instance=None, initial_data=None):
+    def create_or_update_helper(self, field, value, func_response='create', instance=None, initial_data=None, hide_selected=False):
 
         is_multichoice_field = self.telega_form.base_fields[field].__class__ == ModelMultipleChoiceField if field else False
         show_field_variants_for_update = (func_response == 'change') and (value is None) and (self.update.message is None)
@@ -248,14 +248,16 @@ class TelegaViewSet(metaclass=TelegaViewSetMetaClass):
                     res = self.generate_message_next_field(
                         field,
                         func_response=func_response,
-                        instance_id=instance_id
+                        instance_id=instance_id,
+                        hide_selected=hide_selected
                     )
 
                 elif form.next_field:
                     res = self.generate_message_next_field(
                         form.next_field,
                         func_response=func_response,
-                        instance_id=instance_id
+                        instance_id=instance_id,
+                        hide_selected=hide_selected
                     )
                 else:
                     if func_response == 'create':
@@ -541,6 +543,7 @@ class TelegaViewSet(metaclass=TelegaViewSetMetaClass):
             callback_path,
             self_variant=True,
             show_next_button=True,
+            hide_selected=False,
     ):
         is_boolean_field = issubclass(type(self.telega_form.base_fields[next_field]), BooleanField)
         is_choice_field = issubclass(type(self.telega_form.base_fields[next_field]), ChoiceField)
@@ -548,7 +551,7 @@ class TelegaViewSet(metaclass=TelegaViewSetMetaClass):
 
         buttons = list([
             [inlinebutt(
-                text=text if not value in selected_variants else f'✅ {text}',
+                text=text if not value in selected_variants or hide_selected else f'✅ {text}',
                 callback_data=callback_path(value)
             )] for value, text in choices
         ])
@@ -563,7 +566,7 @@ class TelegaViewSet(metaclass=TelegaViewSetMetaClass):
             ])
         return buttons
 
-    def generate_message_next_field(self, next_field, mess='', func_response='create', instance_id=None):
+    def generate_message_next_field(self, next_field, mess='', func_response='create', instance_id=None, hide_selected=False):
         # import pdb;pdb.set_trace()
 
         is_choice_field = issubclass(type(self.telega_form.base_fields[next_field]), ChoiceField)
@@ -608,7 +611,7 @@ class TelegaViewSet(metaclass=TelegaViewSetMetaClass):
 
             # print(choices)
             buttons += self.generate_message_next_field_choice_buttons(
-                next_field, func_response, choices, selected_variants, callback_path
+                next_field, func_response, choices, selected_variants, callback_path, hide_selected=hide_selected
             )
 
             # required=False also for multichoice field or field with default value,
