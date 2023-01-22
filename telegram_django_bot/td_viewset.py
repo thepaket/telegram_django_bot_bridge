@@ -82,10 +82,10 @@ class TelegaViewSet(metaclass=TelegaViewSetMetaClass):
         'succesfully_deleted': gettext_lazy('The %(viewset_name)s  %(model_id)s is successfully deleted.'),
         'confirm_deleting': gettext_lazy('Are you sure you want to delete %(viewset_name)s  %(model_id)s?'),
         'confirm_delete_button_text': gettext_lazy('🗑 Yes, delete'),
-        'generate_message_next_field': "",
-        'generate_message_success_created': "",
+        'generate_message_next_field': gettext_lazy('Please, fill the field %(label)s\n\n'),
+        'generate_message_success_created': gettext_lazy('The %(viewset_name)s is created! \n\n'),
         'generate_message_value_error': gettext_lazy('While adding %(label)s the next errors were occurred: %(errors)s\n\n'),
-        'generate_message_self_variant': "",
+        'generate_message_self_variant': gettext_lazy('Please, write the value for field %(label)s \n\n'),
         'generate_message_no_elem': gettext_lazy(
             'The %(viewset_name)s %(model_id)s has not been found 😱 \nPlease try again from the beginning.'
         ),
@@ -642,7 +642,7 @@ class TelegaViewSet(metaclass=TelegaViewSetMetaClass):
 
     def generate_message_success_created(self, model_or_pk=None, mess=''):
 
-        mess += self.show_texts_dict['generate_message_success_created'] % {'viewset_name': self.viewset_name}
+        # mess += self.show_texts_dict['generate_message_success_created'] % {'viewset_name': self.viewset_name}
 
         if model_or_pk:
             return self.show_elem(model_or_pk, mess)
@@ -658,7 +658,7 @@ class TelegaViewSet(metaclass=TelegaViewSetMetaClass):
     def generate_message_self_variant(self, field_name, mess='', func_response='create', instance_id=None):
         field = self.telega_form.base_fields[field_name]
 
-        mess += self.show_texts_dict['generate_message_self_variant'] % {'label': field.label}
+        # mess += self.show_texts_dict['generate_message_self_variant'] % {'label': field.label}
 
         if field.help_text:
             mess += f'{field.help_text}\n\n'
