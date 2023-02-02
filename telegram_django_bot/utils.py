@@ -81,13 +81,13 @@ def handler_decor(log_type='F'):
                     pass
                 else:
                     res = [bot.send_message(user.id, str(ERROR_MESSAGE))]  # should be bot.send_format_message
-                    bot.send_message(user.id, str(error))
+#                     bot.send_message(user.id, str(error))
                     tb = sys.exc_info()[2]
                     raise error.with_traceback(tb)
             except Exception as e:
 
                 res = [bot.send_message(user.id, str(ERROR_MESSAGE))]  # should be bot.send_format_message
-                bot.send_message(user.id, str(e))
+#                 bot.send_message(user.id, str(e))
                 tb = sys.exc_info()[2]
                 raise e.with_traceback(tb)
 
