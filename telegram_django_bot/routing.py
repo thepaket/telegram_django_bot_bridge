@@ -99,7 +99,7 @@ class RouterCallbackMessageCommandHandler(Handler):
                     try:
                         logging.info('user.current_utrl', user.current_utrl)
                     except Exception as e:
-                        logging.info(e)
+                        logging.error(e)
                     if user.current_utrl:
                         callback_func = telega_resolve(user.current_utrl, self.utrl_conf)
         return callback_func
