@@ -96,10 +96,10 @@ class RouterCallbackMessageCommandHandler(Handler):
 
                 user = get_user_model().objects.filter(id=user_details.id).first()
                 if user:
-                    try:
-                        logging.info('user.current_utrl', user.current_utrl)
-                    except Exception as e:
-                        logging.error(e)
+#                     try:
+#                         logging.info('user.current_utrl', user.current_utrl)
+#                     except Exception as e:
+#                         logging.error(e)
                     if user.current_utrl:
                         callback_func = telega_resolve(user.current_utrl, self.utrl_conf)
         return callback_func
