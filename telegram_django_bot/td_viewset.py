@@ -575,7 +575,7 @@ class TelegaViewSet(metaclass=TelegaViewSetMetaClass):
             buttons = []
             field = self.telega_form.base_fields[next_field]
 
-            mess += self.show_texts_dict['generate_message_next_field'] % {'label': field.label}
+            # mess += self.show_texts_dict['generate_message_next_field'] % {'label': field.label}
             if field.help_text:
                 mess += f'{field.help_text}\n\n'
 
@@ -642,7 +642,7 @@ class TelegaViewSet(metaclass=TelegaViewSetMetaClass):
 
     def generate_message_success_created(self, model_or_pk=None, mess=''):
 
-        mess += self.show_texts_dict['generate_message_success_created'] % {'viewset_name': self.viewset_name}
+        # mess += self.show_texts_dict['generate_message_success_created'] % {'viewset_name': self.viewset_name}
 
         if model_or_pk:
             return self.show_elem(model_or_pk, mess)
@@ -658,7 +658,7 @@ class TelegaViewSet(metaclass=TelegaViewSetMetaClass):
     def generate_message_self_variant(self, field_name, mess='', func_response='create', instance_id=None):
         field = self.telega_form.base_fields[field_name]
 
-        mess += self.show_texts_dict['generate_message_self_variant'] % {'label': field.label}
+        # mess += self.show_texts_dict['generate_message_self_variant'] % {'label': field.label}
 
         if field.help_text:
             mess += f'{field.help_text}\n\n'
