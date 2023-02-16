@@ -263,7 +263,7 @@ class TelegaViewSet(metaclass=TelegaViewSetMetaClass):
                     if func_response == 'create':
                         res = self.generate_message_success_created(self.form.instance)
                     else:
-                        res = self.show_elem(self.form.instance, _('The field has been updated!\n\n'))
+                        res = self.show_elem(self.form.instance, '')
             else:
                 res = self.generate_message_value_error(
                     field or list(form.fields.keys())[-1],
